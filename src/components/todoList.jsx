@@ -21,11 +21,11 @@ function TodoList({ todos, handleEdit, handleUpdateTodo, handleDelete }) {
                   className={styles.editImg}
                   src={edit}
                 />
-                {/* <img
+                <img
                   onClick={() => handleDelete(todo.id)}
                   className={styles.deleteImg}
                   src={deleteImg}
-                /> */}
+                />
               </Box>
               {/* <button onClick={() => handleEdit(todo.id)}>Edit</button>
               <button onClick={() => handleDelete(todo.id)}>Delete</button> */}
