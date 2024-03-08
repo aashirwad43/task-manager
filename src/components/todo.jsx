@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/todo.module.scss";
 import Box from "./box";
+import Navbar from "./Navbar";
 
 function Todo() {
   const [todos, setTodos] = useState();
@@ -22,15 +23,17 @@ function Todo() {
 
   return (
     <div className={styles.outerDiv}>
+      <Navbar />
       {todos &&
         todos.map((todo) => {
           return (
             <div className={styles.row} key={todo.id}>
-              <Box>
-                <h1>{todo.title}</h1>
-                <h1>{`${todo.completed}`}</h1>
-                {/* <h1>{todo.completed}</h1> */}
-              </Box>
+              <div className={styles.col}>
+                <Box>
+                  <div>Title: {todo.title}</div>
+                  <div>Completed: {`${todo.completed}`}</div>
+                </Box>
+              </div>
             </div>
           );
         })}

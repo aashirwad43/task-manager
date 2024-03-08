@@ -1,3 +1,11 @@
 .outerDiv {
-  padding: 1rem;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  width: 50%;
 }
