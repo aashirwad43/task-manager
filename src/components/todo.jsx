@@ -9,7 +9,7 @@ function Todo() {
   const [todo, setTodo] = useState("");
 
   useEffect(() => {
-    // fetch todos asynchronously
+    // FETCH TODO
     const fetchTodos = async () => {
       try {
         const todos = await getTodos(); // wait for promise to resolve & return todos
@@ -22,6 +22,7 @@ function Todo() {
     fetchTodos();
   }, []);
 
+  // ADD TODO
   const handleCreateTodo = async (e) => {
     e.preventDefault();
     if (todo.trim() === "") {
@@ -29,10 +30,8 @@ function Todo() {
     }
 
     const newTodo = {
-      // id: uuidv4(),
       title: todo,
       completed: false,
-      // userId: uuidv4(),
     };
 
     try {
@@ -47,7 +46,7 @@ function Todo() {
 
   return (
     <div>
-      <h1>Task manager</h1>
+      <h1 style={{ color: "white" }}>Task manager</h1>
       <TodoForm
         todo={todo}
         handleCreateTodo={handleCreateTodo}

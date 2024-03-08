@@ -1,5 +1,9 @@
 .box {
-  border: 2px solid black;
+  margin: 1rem 3rem;
+  background-color: aliceblue;
+  display: flex;
+  width: 670px;
+  padding: 2px;
   border-radius: 5px;
-  margin-bottom: 1rem;
+  align-items: center;
 }
