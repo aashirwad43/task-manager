@@ -1,6 +1,6 @@
 import styles from "../styles/todoForm.module.scss";
 
-function TodoForm({ todo, handleCreateTodo, setTodo }) {
+function TodoForm({ todo, handleCreateTodo, setTodo, editId }) {
   return (
     <div>
       <form onSubmit={handleCreateTodo}>
@@ -13,7 +13,7 @@ function TodoForm({ todo, handleCreateTodo, setTodo }) {
           }}
         />
         <button className={styles.addButton} type="submit">
-          Add
+          {editId ? "Edit" : "Add"}
         </button>
       </form>
     </div>

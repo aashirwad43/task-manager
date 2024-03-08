@@ -1,7 +1,7 @@
 import styles from "../styles/todo.module.scss";
 import Box from "./box";
 
-function TodoList({ todos }) {
+function TodoList({ todos, handleEdit, handleUpdateTodo, handleDelete }) {
   return (
     <div>
       <div className={styles.outerDiv}>
@@ -14,6 +14,8 @@ function TodoList({ todos }) {
                   <p>{`${todo.completed}`}</p>
                   {/* <h1>{todo.completed}</h1> */}
                 </Box>
+                <button onClick={() => handleEdit(todo.id)}>Edit</button>
+                <button onClick={() => handleDelete(todo.id)}>Delete</button>
               </div>
             );
           })}
