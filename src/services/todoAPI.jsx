@@ -25,3 +25,19 @@ export const postTodo = async (newTodo) => {
     throw error;
   }
 };
+
+export const updateTodo = async (updatedTodo, editId) => {
+  try {
+    const response = await fetch(BASE_URL + editId, {
+      method: "PUT",
+      body: JSON.stringify(updatedTodo),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

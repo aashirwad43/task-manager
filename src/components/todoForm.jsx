@@ -1,9 +1,15 @@
 import styles from "../styles/todoForm.module.scss";
 
-function TodoForm({ todo, handleCreateTodo, setTodo, editId }) {
+function TodoForm({
+  todo,
+  handleCreateTodo,
+  setTodo,
+  editId,
+  handleUpdateTodo,
+}) {
   return (
     <div>
-      <form onSubmit={handleCreateTodo}>
+      <form>
         <input
           type="text"
           placeholder="add a todo"
@@ -12,7 +18,11 @@ function TodoForm({ todo, handleCreateTodo, setTodo, editId }) {
             setTodo(e.target.value);
           }}
         />
-        <button className={styles.addButton} type="submit">
+        <button
+          className={styles.addButton}
+          type="submit"
+          onClick={editId ? handleUpdateTodo : handleCreateTodo}
+        >
           {editId ? "Edit" : "Add"}
         </button>
       </form>

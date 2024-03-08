@@ -12,7 +12,6 @@ function TodoList({ todos, handleEdit, handleUpdateTodo, handleDelete }) {
                 <Box>
                   <p>{todo.title}</p>
                   <p>{`${todo.completed}`}</p>
-                  {/* <h1>{todo.completed}</h1> */}
                 </Box>
                 <button onClick={() => handleEdit(todo.id)}>Edit</button>
                 <button onClick={() => handleDelete(todo.id)}>Delete</button>
