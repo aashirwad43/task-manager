@@ -1,39 +1,59 @@
 import { useEffect, useState } from "react";
-import styles from "../styles/todo.module.scss";
-import Box from "./box";
+// import { v4 as uuidv4 } from "uuid";
+import { getTodos, postTodo } from "../services/todoAPI";
+import TodoList from "./todoList";
+import TodoForm from "./todoForm";
 
 function Todo() {
   const [todos, setTodos] = useState();
+  const [todo, setTodo] = useState("");
 
   useEffect(() => {
-    const getTodos = async () => {
+    // fetch todos asynchronously
+    const fetchTodos = async () => {
       try {
-        const res = await fetch("https://jsonplaceholder.typicode.com/todos/");
-        const data = await res.json();
-        setTodos(data);
+        const todos = await getTodos(); // wait for promise to resolve & return todos
+        setTodos(todos);
+        console.log(todos);
       } catch (error) {
         console.log(error);
       }
     };
-
-    getTodos();
-    console.log(todos);
+    fetchTodos();
   }, []);
 
+  const handleCreateTodo = async (e) => {
+    e.preventDefault();
+    if (todo.trim() === "") {
+      return;
+    }
+
+    const newTodo = {
+      // id: uuidv4(),
+      title: todo,
+      completed: false,
+      // userId: uuidv4(),
+    };
+
+    try {
+      const createdTodo = await postTodo(newTodo);
+      setTodos([...todos, createdTodo]);
+      setTodo("");
+      console.log(todos);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className={styles.outerDiv}>
-      {todos &&
-        todos.map((todo) => {
-          return (
-            <div className={styles.row} key={todo.id}>
-              <Box>
-                <h1>{todo.title}</h1>
-                <h1>{`${todo.completed}`}</h1>
-                {/* <h1>{todo.completed}</h1> */}
-              </Box>
-            </div>
-          );
-        })}
+    <div>
+      <h1>Task manager</h1>
+      <TodoForm
+        todo={todo}
+        handleCreateTodo={handleCreateTodo}
+        setTodo={setTodo}
+      />
+      <TodoList todos={todos} />
     </div>
   );
 }
