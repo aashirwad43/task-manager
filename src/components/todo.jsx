@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/todo.module.scss";
 import Box from "./box";
 import Navbar from "./Navbar";
+import StatusIndicator from "./statusIndicator";
 
 function Todo() {
   const [todos, setTodos] = useState();
@@ -30,8 +31,9 @@ function Todo() {
             <div className={styles.row} key={todo.id}>
               <div className={styles.col}>
                 <Box>
-                  <div>Title: {todo.title}</div>
-                  <div>Completed: {`${todo.completed}`}</div>
+                  <StatusIndicator status={todo.completed} />
+                  <div className={styles.title}>{todo.title}</div>
+                  {/* <div>Completed: {`${todo.completed}`}</div> */}
                 </Box>
               </div>
             </div>

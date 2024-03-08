@@ -1,0 +1,14 @@
+.statusBox {
+  width: 20px;
+  border-radius: 50%;
+  height: 20px;
+  margin-right: 1.5rem;
+}
+
+.statusBox--true {
+  background-color: green;
+}
+
+.statusBox--false {
+  background-color: red;
+}
