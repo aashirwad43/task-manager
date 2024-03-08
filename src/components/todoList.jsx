@@ -16,12 +16,16 @@ function TodoList({ todos, handleEdit, handleUpdateTodo, handleDelete }) {
                 <div className={styles.title}>{todo.title}</div>
                 {/* <div>Completed: {`${todo.completed}`}</div> */}
 
-                <a onClick={() => handleEdit(todo.id)}>
-                  <img className={styles.editImg} src={edit} />
-                </a>
-                <a onClick={() => handleDelete(todo.id)}>
-                  <img className={styles.editImg} src={deleteImg} />
-                </a>
+                <img
+                  onClick={() => handleEdit(todo.id)}
+                  className={styles.editImg}
+                  src={edit}
+                />
+                <img
+                  onClick={() => handleDelete(todo.id)}
+                  className={styles.deleteImg}
+                  src={deleteImg}
+                />
               </Box>
               {/* <button onClick={() => handleEdit(todo.id)}>Edit</button>
               <button onClick={() => handleDelete(todo.id)}>Delete</button> */}

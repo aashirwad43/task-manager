@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/todo.module.scss";
-import Box from "./box";
 import Navbar from "./Navbar";
-import StatusIndicator from "./statusIndicator";
 // import { v4 as uuidv4 } from "uuid";
-import { getTodos, postTodo } from "../services/todoAPI";
+import { getTodos, postTodo, updateTodo } from "../services/todoAPI";
 import TodoList from "./todoList";
 import TodoForm from "./todoForm";
 
@@ -29,18 +27,6 @@ function Todo() {
 
   // ADD TODO
   const handleCreateTodo = async (e) => {
-    // if (editId) {
-    //   const editTodo = todos.find((todo) => todo.id === editId);
-    //   const updatedTodoList = todos.map((todo) =>
-    //     todo.id === editTodo.id
-    //       ? (todo = { id: todo.id, title, completed: false })
-    //       : { id: todo.id, title: todo.title, completed: todo.completed }
-    //   );
-    //   setTodos(updatedTodoList);
-    //   setEditId(0);
-    //   return;
-    // }
-
     e.preventDefault();
     if (todo.trim() === "") {
       return;
@@ -66,11 +52,12 @@ function Todo() {
     const editTodo = todos.find((item) => item.id === id);
     setTodo(editTodo.title);
     setEditId(id);
-    console.log(todo);
+    // console.log(todo);
   };
 
-  // UPDATE TASK
-  const handleUpdateTodo = async () => {
+  // UPDATE TODO
+  const handleUpdateTodo = async (e) => {
+    e.preventDefault();
     if (todo.trim() === "") {
       return;
     }
@@ -81,25 +68,15 @@ function Todo() {
     };
 
     try {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/todos/${editId}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(updatedTodo),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        }
-      );
-
-      const updatedData = await response.json();
+      const updatedData = await updateTodo(updatedTodo, editId);
       setTodos((prev) =>
-        prev.map((todo) =>
-          todo.id === editId ? { ...todo, title: updatedData.title } : todo
+        prev.map((task) =>
+          task.id === editId ? { ...task, title: updatedData.title } : task
         )
       );
       setTodo("");
-      setEditId(null);
+      console.log("updated todos: ", todos);
+      setEditId(0);
     } catch (error) {
       console.log(error);
     }
@@ -133,40 +110,13 @@ function Todo() {
         handleCreateTodo={handleCreateTodo}
         setTodo={setTodo}
         editId={editId}
+        handleUpdateTodo={handleUpdateTodo}
       />
       <TodoList
         todos={todos}
         handleEdit={handleEdit}
-        handleUpdateTodo={handleUpdateTodo}
         handleDelete={handleDelete}
       />
-      {/* {todos &&
-        todos.map((todo) => {
-          return (
-            <div className={styles.row} key={todo.id}>
-              <div className={styles.col}>
-                <Box>
-                  <StatusIndicator status={todo.completed} />
-                  <div className={styles.title}>{todo.title}</div>
-                </Box>
-              </div>
-            </div>
-          );
-        })} */}
-      {/* <div>
-      <h1 style={{ color: "white" }}>Task manager</h1>
-      <TodoForm
-        todo={todo}
-        handleCreateTodo={handleCreateTodo}
-        setTodo={setTodo}
-        editId={editId}
-      />
-      <TodoList
-        todos={todos}
-        handleEdit={handleEdit}
-        handleUpdateTodo={handleUpdateTodo}
-        handleDelete={handleDelete}
-      /> */}
     </div>
   );
 }
