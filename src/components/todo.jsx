@@ -112,23 +112,35 @@ function Todo() {
     console.log(todos);
   };
 
-  // GET DATA FROM LOCAL STORAGE
-  useEffect(() => {
-    const todos = JSON.parse(localStorage.getItem("list"));
-    if (todos && todos.length > 0) {
-      setTodos(todos);
-    }
-  }, []);
+  //   // GET DATA FROM LOCAL STORAGE
+  //   useEffect(() => {
+  //     const todos = JSON.parse(localStorage.getItem("list"));
+  //     if (todos && todos.length > 0) {
+  //       setTodos(todos);
+  //     }
+  //   }, []);
 
-  //ADD DATA TO LOCAL STORAGE
-  useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(todos));
-  }, [todos]);
+  //   //ADD DATA TO LOCAL STORAGE
+  //   useEffect(() => {
+  //     localStorage.setItem("list", JSON.stringify(todos));
+  //   }, [todos]);
 
   return (
     <div className={styles.outerDiv}>
       <Navbar />
-      {todos &&
+      <TodoForm
+        todo={todo}
+        handleCreateTodo={handleCreateTodo}
+        setTodo={setTodo}
+        editId={editId}
+      />
+      <TodoList
+        todos={todos}
+        handleEdit={handleEdit}
+        handleUpdateTodo={handleUpdateTodo}
+        handleDelete={handleDelete}
+      />
+      {/* {todos &&
         todos.map((todo) => {
           return (
             <div className={styles.row} key={todo.id}>
@@ -136,12 +148,11 @@ function Todo() {
                 <Box>
                   <StatusIndicator status={todo.completed} />
                   <div className={styles.title}>{todo.title}</div>
-                  {/* <div>Completed: {`${todo.completed}`}</div> */}
                 </Box>
               </div>
             </div>
           );
-        })}
+        })} */}
       {/* <div>
       <h1 style={{ color: "white" }}>Task manager</h1>
       <TodoForm
