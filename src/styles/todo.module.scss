@@ -26,12 +26,19 @@
   margin-right: 10px;
 }
 
+.title.complete {
+  opacity: 0.3;
+  text-decoration: line-through;
+}
+
 .editImg {
   width: 3%;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .deleteImg {
   width: 3%;
   margin-right: 10px;
+  cursor: pointer;
 }
