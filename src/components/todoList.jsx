@@ -4,7 +4,7 @@ import StatusIndicator from "./statusIndicator";
 import edit from "../assets/edit.png";
 import deleteImg from "../assets/delete.png";
 
-function TodoList({ todos, handleEdit, handleUpdateTodo, handleDelete }) {
+function TodoList({ todos, handleEdit, handleDelete, handlecomplete }) {
   return (
     <div className={styles.eachTodoDiv}>
       {todos &&
@@ -12,12 +12,21 @@ function TodoList({ todos, handleEdit, handleUpdateTodo, handleDelete }) {
           return (
             <div className={styles.row} key={todo.id}>
               <Box>
-                <StatusIndicator status={todo.completed} />
-                <div className={styles.title}>{todo.title}</div>
-                {/* <div>Completed: {`${todo.completed}`}</div> */}
+                <StatusIndicator
+                  onClick={() => handlecomplete(todo.id)}
+                  status={todo.completed}
+                />
+                {/* <div className={styles.title}>{todo.title}</div> */}
+                <div
+                  className={`${styles.title} ${
+                    todo.completed ? styles.complete : ""
+                  }`}
+                >
+                  {todo.title}
+                </div>
 
                 <img
-                  onClick={() => handleEdit(todo.id)}
+                  onClick={() => !todo.completed && handleEdit(todo.id)}
                   className={styles.editImg}
                   src={edit}
                 />

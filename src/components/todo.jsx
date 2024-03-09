@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/todo.module.scss";
 import Navbar from "./Navbar";
-// import { v4 as uuidv4 } from "uuid";
 import { getTodos, postTodo, updateTodo } from "../services/todoAPI";
 import TodoList from "./todoList";
 import TodoForm from "./todoForm";
+import { v4 as uuidv4 } from "uuid";
 
 function Todo() {
   const [todos, setTodos] = useState([]);
@@ -23,7 +23,20 @@ function Todo() {
       }
     };
     fetchTodos();
+    loadTodosFromLocalStorage();
   }, []);
+
+  // SAVE TODOS TO LOCAL STORAGE
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  // LOAD TODO FROM LOCAL STORAGE
+  const loadTodosFromLocalStorage = () => {
+    const data = localStorage.getItem("todos");
+    if (data !== null) setTodos(JSON.parse(data));
+    console.log(todos);
+  };
 
   // ADD TODO
   const handleCreateTodo = async (e) => {
@@ -35,13 +48,14 @@ function Todo() {
     const newTodo = {
       title: todo,
       completed: false,
+      userId: uuidv4(),
     };
 
     try {
       const createdTodo = await postTodo(newTodo);
-      setTodos([...todos, createdTodo]);
+      setTodos([createdTodo, ...todos]);
       setTodo("");
-      console.log(todos);
+      console.log("after adding:", todos);
     } catch (error) {
       console.log(error);
     }
@@ -89,18 +103,13 @@ function Todo() {
     console.log(todos);
   };
 
-  //   // GET DATA FROM LOCAL STORAGE
-  //   useEffect(() => {
-  //     const todos = JSON.parse(localStorage.getItem("list"));
-  //     if (todos && todos.length > 0) {
-  //       setTodos(todos);
-  //     }
-  //   }, []);
-
-  //   //ADD DATA TO LOCAL STORAGE
-  //   useEffect(() => {
-  //     localStorage.setItem("list", JSON.stringify(todos));
-  //   }, [todos]);
+  // COMPLETE TODO
+  const handlecomplete = (id) => {
+    const completedTodo = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodos(completedTodo);
+  };
 
   return (
     <div className={styles.outerDiv}>
@@ -116,6 +125,7 @@ function Todo() {
         todos={todos}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        handlecomplete={handlecomplete}
       />
     </div>
   );
