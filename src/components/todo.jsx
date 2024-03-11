@@ -45,7 +45,10 @@ function Todo() {
       return;
     }
 
+    const clientTodoId = uuidv4();
+
     const newTodo = {
+      id: clientTodoId,
       title: todo,
       completed: false,
       userId: uuidv4(),
@@ -53,9 +56,10 @@ function Todo() {
 
     try {
       const createdTodo = await postTodo(newTodo);
+      createdTodo.id = clientTodoId; // Replace server-provided id with the one that we generated on client side.
       setTodos([createdTodo, ...todos]);
       setTodo("");
-      console.log("after adding:", todos);
+      console.log("new todo:", createdTodo);
     } catch (error) {
       console.log(error);
     }
@@ -64,9 +68,9 @@ function Todo() {
   // EDIT TODO
   const handleEdit = (id) => {
     const editTodo = todos.find((item) => item.id === id);
+    // console.log(editTodo);
     setTodo(editTodo.title);
     setEditId(id);
-    // console.log(todo);
   };
 
   // UPDATE TODO
@@ -80,16 +84,17 @@ function Todo() {
       title: todo,
       completed: false,
     };
+    console.log("updated todo:", updatedTodo);
 
     try {
       const updatedData = await updateTodo(updatedTodo, editId);
+      console.log("updated todo response:", updatedData);
       setTodos((prev) =>
         prev.map((task) =>
           task.id === editId ? { ...task, title: updatedData.title } : task
         )
       );
       setTodo("");
-      console.log("updated todos: ", todos);
       setEditId(0);
     } catch (error) {
       console.log(error);
@@ -104,7 +109,7 @@ function Todo() {
   };
 
   // COMPLETE TODO
-  const handlecomplete = (id) => {
+  const handleComplete = (id) => {
     const completedTodo = todos.map((todo) =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     );
@@ -125,7 +130,7 @@ function Todo() {
         todos={todos}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
-        handlecomplete={handlecomplete}
+        handleComplete={handleComplete}
       />
     </div>
   );
