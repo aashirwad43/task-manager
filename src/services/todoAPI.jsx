@@ -19,7 +19,7 @@ export const postTodo = async (newTodo) => {
         "Content-type": "application/json",
       },
     });
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.error(error);
     throw error;
@@ -35,7 +35,7 @@ export const updateTodo = async (updatedTodo, editId) => {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-    return response.json();
+    return await response.json();
   } catch (error) {
     console.error(error);
     throw error;
